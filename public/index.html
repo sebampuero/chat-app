@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Join the chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+  <link href="/css/styles.css" rel="stylesheet">
+</head>
+
+<body class="centered-form">
+  <div class="centered-form__form">
+    <form action="/chat.html">
+      <div class="form-field">
+        <h3>Join a chat</h3>
+      </div>
+      <div class="form-field">
+        <label>Display name</label>
+      </div>
+      <div class="form-field">
+        <input type="text" name="name" autofocus autocomplete="off">
+      </div>
+      <div class="form-field">
+        <label>Room Name</label>
+        <input type="text" name="room" autocomplete="off">
+      </div>
+      <div class="form-field">
+        <label>Existing rooms</label>
+        <select class="form-control" id="select-room" name="roomSelect"></select>
+        <small id="emailHelp" class="form-text text-muted">Choose either existing room or new room name. New room name is prefered when both are given.</small>
+      </div>
+      <div class="form-field">
+        <button>Join</button>
+      </div>
+    </form>
+  </div>
+</body>
+
+<script src="/js/libs/jquery-3.2.1.min.js"></script>
+<script>
+  async function getRoomList() {
+    let list = await fetch("/users");
+    let listPromise = list.json();
+
+    listPromise.then(function (data) {
+      let $dropdown = $("#select-room");
+      $.each(data, function (index, el) {
+        $dropdown.append($("<option />").val(el).text(el));
+      });
+    });
+  }
+
+  getRoomList();
+</script>
+
+</html>
